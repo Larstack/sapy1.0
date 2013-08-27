@@ -12,7 +12,6 @@ public class Funzione extends ValToken
 	 */
 	public Funzione(String valoreToken)
 	{
-		tipoToken = Tok.FUNZIONE;
-		this.valoreToken = valoreToken;
+		super(Tok.FUNZIONE, valoreToken);
 	}
 }

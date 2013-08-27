@@ -10,7 +10,7 @@ public class Maggiore extends Token
 	 */
 	public Maggiore()
 	{
-		tipoToken = Tok.MAGGIORE;
+		super(Tok.MAGGIORE);
 	}
 
 }

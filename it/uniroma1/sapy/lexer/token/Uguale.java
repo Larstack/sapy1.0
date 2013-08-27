@@ -10,7 +10,7 @@ public class Uguale extends Token
 	 */
 	public Uguale()
 	{
-		tipoToken = Tok.UGUALE;
+		super(Tok.UGUALE);
 	}
 
 }

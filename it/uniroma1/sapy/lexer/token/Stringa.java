@@ -12,8 +12,7 @@ public class Stringa extends ValToken
 	 */
 	public Stringa(String valoreToken)
 	{
-		tipoToken = Tok.STRINGA;
-		this.valoreToken = valoreToken;
+		super(Tok.STRINGA, valoreToken);
 	}
 
 }

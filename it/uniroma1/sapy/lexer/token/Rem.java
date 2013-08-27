@@ -10,7 +10,7 @@ public class Rem extends Token
 	 */
 	public Rem()
 	{
-		tipoToken = Tok.REM;
+		super(Tok.REM);
 	}
 
 }

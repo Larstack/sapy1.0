@@ -10,7 +10,7 @@ public class DuePunti extends Token{
 	 */
 	public DuePunti()
 	{
-		tipoToken = Tok.DUEPUNTI;
+		super(Tok.DUEPUNTI);
 	}
 	
 }

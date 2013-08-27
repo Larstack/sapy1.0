@@ -10,7 +10,7 @@ public class Eol extends Token {
 	 */
 	public Eol()
 	{
-		tipoToken = Tok.EOL;
+		super(Tok.EOL);
 	}
 
 }

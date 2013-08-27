@@ -10,7 +10,7 @@ public class Minore extends Token {
 	 */
 	public Minore()
 	{
-		tipoToken = Tok.MINORE;
+		super(Tok.MINORE);
 	}
 
 }

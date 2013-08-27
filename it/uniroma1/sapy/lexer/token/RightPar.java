@@ -10,7 +10,7 @@ public class RightPar extends Token
 	 */
 	public RightPar()
 	{
-		tipoToken = Tok.RIGHT_PAR;
+		super(Tok.RIGHT_PAR);
 	}
 	
 }

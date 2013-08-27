@@ -8,6 +8,15 @@ abstract public class ValToken extends Token
 {
 	protected Object valoreToken;
 	
+	/**
+	 * Costruttore
+	 */
+	public ValToken(Tok t, Object valoreToken)
+	{
+		super(t);
+		this.valoreToken = valoreToken;
+	}
+	
 /**
  * Ritorna il valore del token
  * @return Object - Valore del token
