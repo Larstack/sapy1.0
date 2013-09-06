@@ -1,11 +1,11 @@
 package it.uniroma1.sapy.lexer.token;
 
-public class Booleano extends ValToken
+public class Booleano extends Token
 {
 	
 	/**
 	 * Costruttore	
-	 * @param TRUE o FALSE
+	 * @param boolean - Valore della variabile
 	 */
 	public Booleano(boolean b)
 	{

@@ -15,7 +15,7 @@ public class Lexer
 	/**
 	 * Costruttore<br />
 	 * Inizializza lo scanner e chiama il metodo esaminaSorgente
-	 * @param nomeFile - Percorso del file sorgente
+	 * @param String - Percorso del file sorgente
 	 * @exception FileNotFoundException - Viene lanciata se il file sorgente non viene trovato  
 	 */
 	public Lexer(String nomeFile)
@@ -38,7 +38,7 @@ public class Lexer
 	
 	/**
 	 * Esegue l'analisi del sorgente linea per linea e costruisce la lista di Token
-	 * @param s - Scanner passato dal costruttore dopo aver caricato il sorgente
+	 * @param Scanner - Scanner passato dal costruttore dopo aver caricato il sorgente
 	 */
 	public void esaminaSorgente(Scanner s)
 	{
@@ -96,7 +96,7 @@ public class Lexer
 	
 	/**
 	 * Individua il tipo di Token, partendo dalla stringa data in input 
-	 * @param t - Stringa da analizzare
+	 * @param String - Stringa da analizzare
 	 */
 	public void individuaToken(String t)
 	{
@@ -158,7 +158,7 @@ public class Lexer
 	
 	/**
 	 * Esamina un blocco di una lina di codice, riconoscendone i token all'interno
-	 * @param blocco - Parte di linea di codice da esaminare
+	 * @param String - Parte di linea di codice da esaminare
 	 */
 	public void esaminaBlocco(String blocco)
 	{

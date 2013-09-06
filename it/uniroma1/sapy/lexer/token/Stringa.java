@@ -8,7 +8,7 @@ public class Stringa extends ValToken
 
 	/**
 	 * Costruttore
-	 * @param valoreToken - Valore di tipo stringa del Token 
+	 * @param String - Valore del Token 
 	 */
 	public Stringa(String valoreToken)
 	{
