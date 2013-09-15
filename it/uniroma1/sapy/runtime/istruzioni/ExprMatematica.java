@@ -5,10 +5,22 @@ import it.uniroma1.sapy.lexer.token.*;
 
 import java.util.*;
 
+/**
+ * Espressione matematica - Estende la classe Espressione
+ */
 public class ExprMatematica extends Espressione
 {
+	
+	/**
+	 * Costruttore
+	 * @param ArrayList<Token> - Espressione matematica da risolvere
+	 */
 	public ExprMatematica(ArrayList<Token> t){ super(t); }
 	
+	/**
+	 * Ritorna il risultato dell'espressione matematica
+	 * @return Intero - Ritorna un token di tipo Intero 
+	 */
 	@Override
 	public Token getRisultato() throws Exception
 	{
@@ -17,10 +29,11 @@ public class ExprMatematica extends Espressione
 		return result;
 	}
 	
-	public void consume(){ point+=1; }
-	
-	public Token peek(){ return text.get(point); }
-	
+	/**
+	 * Punto di partenza nella risoluzione dell'espressione. Esegue la somma o la sottrazione in presenza di un token di tipo Piu o Meno
+	 * @return Intero - Ritorna un token di tipo Intero
+	 * @throws Exception - Lancia un'eccezione se si verifica un errore durante la risoluzione dell'espressione
+	 */
 	public Token expr() throws Exception
 	{
 		Token x = molDivMod();
@@ -42,6 +55,13 @@ public class ExprMatematica extends Espressione
 		return x;
 	}
 
+	/**
+	 * Esegue:<br />- il prodotto tra due token, in presenza di un token di tipo Per<br />
+	 * - la divisione, in presenza di un token di tipo Diviso<br />
+	 * - il modulo, in presenza di un token di tipo Modulo.
+	 * @return Intero - Ritorna un token di tipo Intero
+	 * @throws Exception - Lancia un'eccezione se si verifica un errore durante la risoluzione dell'espressione
+	 */
 	public Token molDivMod() throws Exception
 	{
 		Token x = menoUnario();
@@ -50,7 +70,7 @@ public class ExprMatematica extends Espressione
 			{
 				Token op = peek();
 				consume();
-				Token y = menoUnario();///////
+				Token y = menoUnario();
 				int n1 = (int)x.ritornaValore();
 				int n2 = (int)y.ritornaValore();
 				if(op.ritornaTipoToken().equals(Tok.PER)) x = new Intero(n1*n2);
@@ -60,13 +80,17 @@ public class ExprMatematica extends Espressione
 			}
 		return x;
 	}
+	
+	/**
+	 * Ritorna il token Intero con valore opposto, in presenza di token di tipo Meno 
+	 * @return Intero - Ritorna un token di tipo Intero
+	 */
 	public Token menoUnario() throws Exception
 	{
 		if(peek().ritornaTipoToken().equals(Tok.MENO))
 		{
 			consume();
 			Token x = simpleExpr();
-//			consume();
 			return new Intero(-((int)x.ritornaValore()));
 		}
 		else if(peek().ritornaTipoToken().equals(Tok.PIU))
@@ -77,7 +101,13 @@ public class ExprMatematica extends Espressione
 		}
 		else return simpleExpr();
 	}
-	
+
+	/**
+	 * In presenza di token di tipo LeftPar inizia l'analisi del contenuto tra parentesi, altrimenti ritorna l'Intero se il token è di questo tipo.
+	 * @return Intero - Ritorna un token di tipo Intero
+	 * @throws ParentesiParsingException - Viene lanciata nel caso di errore nelle parentesi tonde.
+	 * @throws OperazioneNonValidaException - Viene lanciata se gli operandi non sono compatibili.
+	 */
 	public Token simpleExpr() throws Exception
 	{
 		Token t = peek();
@@ -117,6 +147,11 @@ public class ExprMatematica extends Espressione
 		}
 	}
 	
+	/**
+	 * Controlla se il token è di tipo Intero, quindi utilizzabile come operando
+	 * @param Token - Token da verificarne il tipo
+	 * @return boolean - Ritorna true in caso di token di tipo Intero, false altrimenti
+	 */
 	public boolean isTerm(Token t)
 	{
 		return t.ritornaTipoToken().equals(Tok.INTERO);

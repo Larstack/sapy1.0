@@ -1,6 +1,7 @@
 package it.uniroma1.sapy.runtime.istruzioni;
 
 import it.uniroma1.sapy.lexer.token.*;
+
 import java.util.*;
 /**
  * Classe astratta per le espressioni booleane e aritmetiche
@@ -26,5 +27,17 @@ abstract public class Espressione
 	 * @throws Exception - Viene lanciata un'eccezione in caso di espressione non valida
 	 */
 	abstract public Token getRisultato() throws Exception;
+	
+	/**
+	 * Incrementa l'indice virtuale dell'espressione
+	 */
+	public void consume(){ point+=1; }
+	
+
+	/**
+	 * Ritorna il token nella posizione definita dall'indice virtuale
+	 * @return Token
+	 */
+	public Token peek(){ return text.get(point); }
 }
 

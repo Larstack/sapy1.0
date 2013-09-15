@@ -4,10 +4,22 @@ import java.util.*;
 import it.uniroma1.sapy.exception.*;
 import it.uniroma1.sapy.lexer.token.*;
 
+/**
+ * Espressione booleana - Estende la classe Espressione
+ */
 public class ExprBooleana extends Espressione
 {	
+	
+	/**
+	 * Costruttore
+	 * @param ArrayList<Token> - Espressione booleana da risolvere
+	 */
 	public ExprBooleana(ArrayList<Token> espressione){ super(espressione); }
 	
+	/**
+	 * Ritorna il risultato dell'espressione booleana
+	 * @return Booleano - Ritorna un token di tipo Booleano 
+	 */
 	@Override
 	public Token getRisultato() throws Exception
 	{	
@@ -16,6 +28,11 @@ public class ExprBooleana extends Espressione
 		return result;
 	}
 	
+	/**
+	 * Punto di partenza nella risoluzione dell'espressione. Esegue la somma logica in presenza di un token di tipo Or
+	 * @return Booleano - Ritorna un token di tipo booleano
+	 * @throws Exception - Lancia un'eccezione se si verifica un errore durante la risoluzione dell'espressione
+	 */
 	public Token expr() throws Exception
 	{
 		Token x = andExpr();
@@ -33,8 +50,11 @@ public class ExprBooleana extends Espressione
 		return x;
 	}
 	
-	public void consume(){ point+=1; }
-	
+	/**
+	 * Esegue il prodotto logico tra due token di tipo Booleano, in presenza di un token di tipo And
+	 * @return Booleano - Ritorna un token di tipo booleano
+	 * @throws Exception - Lancia un'eccezione se si verifica un errore durante la risoluzione dell'espressione
+	 */
 	public Token andExpr() throws Exception
 	{
 		Token x = notExpr();
@@ -53,8 +73,10 @@ public class ExprBooleana extends Espressione
 		return x;
 	}
 	
-	public Token peek(){ return text.get(point); }
-	
+	/**
+	 * Complementa il valore del token in presenza di un token di tipo Not 
+	 * @return Booleano - Ritorna un token di tipo Booleano
+	 */
 	public Token notExpr() throws Exception
 	{
 		if(peek().ritornaTipoToken().equals(Tok.NOT))
@@ -67,6 +89,12 @@ public class ExprBooleana extends Espressione
 		else return simpleExpr();
 	}
 	
+	/**
+	 * In presenza di token di tipo LeftPar inizia l'analisi del contenuto tra parentesi, altrimenti ritorna il Booleano se il token è di questo tipo.
+	 * @return Booleano - Ritorna un token di tipo Booleano
+	 * @throws ParentesiParsingException - Viene lanciata nel caso di errore nelle parentesi tonde.
+	 * @throws OperazioneNonValidaException - Viene lanciata se gli operandi non sono compatibili.
+	 */
 	public Token simpleExpr() throws Exception
 	{
 		Token t = peek();
@@ -106,39 +134,13 @@ public class ExprBooleana extends Espressione
 		}
 	}
 	
+	/**
+	 * Controlla se il token è di tipo Booleano, quindi compatibile con un'operazione logica
+	 * @param Token - Token da verificarne il tipo
+	 * @return boolean - Ritorna true in caso di token di tipo Booleano, false altrimenti
+	 */
 	public boolean isTerm(Token t)
 	{
 		return t.ritornaTipoToken().equals(Tok.BOOLEANO);
-	}
-	public static void main(String[] args) throws Exception {
-		/*array("false", "and", "true", "or", "true", "and",
-		 *  "(", "false", "or", "false", "or", "not", "true", ")");
-		 */
-		ArrayList<Token> t = new ArrayList<Token>();
-		t.add(new Booleano(false));
-		t.add(new And());
-		t.add(new Booleano(true));
-		t.add(new Or());
-		t.add(new Booleano(true));
-		t.add(new And());
-		t.add(new LeftPar());
-		t.add(new Booleano(false));
-		t.add(new Or());
-		t.add(new Booleano(false));
-		t.add(new Or());
-		t.add(new Not());
-		t.add(new Booleano(true));
-		t.add(new RightPar());
-		t.add(new Or());
-		t.add(new Booleano(true));
-		t.add(new And());
-		t.add(new LeftPar());
-		t.add(new Booleano(true));
-		t.add(new Or());
-		t.add(new Not());
-		t.add(new Booleano(true));
-		t.add(new RightPar());		
-		ExprBooleana a = new ExprBooleana(t);
-		System.out.println(a.getRisultato().ritornaValore());
 	}
 }

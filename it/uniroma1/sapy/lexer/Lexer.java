@@ -28,6 +28,7 @@ public class Lexer
 			{
 				Scanner s = new Scanner(f);
 				esaminaSorgente(s);
+				s.close();
 			}
 			catch(FileNotFoundException e)
 			{
@@ -324,13 +325,9 @@ public class Lexer
 		return s;
 	}
 	
-	/**
-	 * 
-	 * @param args
-	 */
 	public static void main(String[] args) 
 	{
-		Lexer lex = new Lexer("/home/leonardo/Development/Programmazione(Navigli)/prg/prg3.sapy");
+		Lexer lex = new Lexer(args[0]);
 		System.out.print(lex.toString());
 	}
 

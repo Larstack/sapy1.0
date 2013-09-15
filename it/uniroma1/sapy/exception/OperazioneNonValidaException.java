@@ -1,7 +1,7 @@
 package it.uniroma1.sapy.exception;
 
 /**
- * Eccezione lanciata se l'espressione analizzata contiene operandi non compatibili tra loro
+ * Eccezione lanciata se l'espressione analizzata contiene operandi non compatibili
  */
 public class OperazioneNonValidaException extends Exception
 {
@@ -11,7 +11,7 @@ public class OperazioneNonValidaException extends Exception
 	@Override
 	public void printStackTrace()
 	{
-		System.out.println("Espressione non valida, in quanto gli operandi non sono compatibili"); 
+		System.out.println("Espressione non valida, in quanto gli operandi non sono compatibili per l'operazione richiesta"); 
 	}
 	
 	@Override
