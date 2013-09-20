@@ -13,6 +13,7 @@ public class ForIstruzione implements Istruzione
 	private String varItera;
 	private ArrayList<Istruzione> istruzioni;
 	private Intero etichetta;
+	private boolean isDecrescente = false;
 	
 	public ForIstruzione(ArrayList<Token> da, ArrayList<Token> finoA, String varItera, ArrayList<Istruzione> istruzioni, Intero etichetta)
 	{
@@ -24,7 +25,11 @@ public class ForIstruzione implements Istruzione
 	}
 	
 	@Override
-	public Intero getLabel(){ return etichetta; }
+	public Intero getLabel()
+	{
+		if(etichetta==null) return null;
+		return etichetta;
+	}
 
 	@Override
 	public Integer esegui() throws Exception
@@ -41,7 +46,6 @@ public class ForIstruzione implements Istruzione
 		ExprMatematica esprMat = new ExprMatematica(da);
 		int from = (int)esprMat.getRisultato().ritornaValore();
 		variabili.setVariabile(varItera, new Intero(from));
-		
 		for(int j=0;j<finoA.size();j++)
 			if(finoA.get(j).ritornaTipoToken().equals(Tok.VARIABILE))
 			{
@@ -51,11 +55,12 @@ public class ForIstruzione implements Istruzione
 					finoA.set(j, valoreVariabile);
 			}
 		esprMat = new ExprMatematica(finoA);
-		int to = (int)esprMat.getRisultato().ritornaValore();		
-
+		int to = (int)esprMat.getRisultato().ritornaValore();
+		variabili.setVariabile(varItera, new Intero(from));
+		if(from>to) isDecrescente = true;
 		int i = from;
-		variabili.setVariabile(varItera, new Intero(i));
-		while(i<=to)
+		if(!isDecrescente){
+		while((int)variabili.getVariabile(varItera).ritornaValore()<=to)
 		{
 			for(int j=0;j<istruzioni.size();j++)
 			{
@@ -78,8 +83,8 @@ public class ForIstruzione implements Istruzione
 				}
 				else
 				{
-					Object ritorno = istruzioni.get(i).esegui();
-					if(!(ritorno==null))
+					Object ritorno = istruzioni.get(j).esegui();
+					if(ritorno!=null)
 					{
 						ritorno = (int)ritorno;
 						boolean labelTrovata = false;
@@ -97,8 +102,58 @@ public class ForIstruzione implements Istruzione
 					}
 				}
 			}
-			i++;
+			i = (int)variabili.getVariabile(varItera).ritornaValore();
 			variabili.setVariabile(varItera, new Intero(i));
+		}}
+		else
+		{
+			while((int)variabili.getVariabile(varItera).ritornaValore()>=to)
+			{
+				for(int j=0;j<istruzioni.size();j++)
+				{
+					if(istruzioni.get(j).getClass().equals(GotoIstruzione.class))
+					{
+						GotoIstruzione istrGoto = (GotoIstruzione)istruzioni.get(j);
+						int label = istrGoto.esegui();
+						boolean labelTrovata = false;
+						for(int k=0;k<istruzioni.size();k++)
+						{
+							if(istruzioni.get(k).getLabel().ritornaValore().equals(label))
+							{
+								j = k;
+								labelTrovata = true;
+								break;
+							}
+						}
+						if(!labelTrovata)
+							return label;
+					}
+					else
+					{
+						
+						Object ritorno = istruzioni.get(j).esegui();
+						if(ritorno!=null)
+						{
+							ritorno = (int)ritorno;
+							boolean labelTrovata = false;
+							for(int k=0;k<istruzioni.size();k++)
+							{
+								if(istruzioni.get(k).getLabel().ritornaValore().equals(ritorno))
+								{
+									j = k;
+									labelTrovata = true;
+									break;
+								}
+							}
+							if(!labelTrovata)
+								return (int)ritorno;
+						}
+					}
+				}
+				i = (int)variabili.getVariabile(varItera).ritornaValore();
+				i--;
+				variabili.setVariabile(varItera, new Intero(i));
+			}
 		}
 		return null;
 	}

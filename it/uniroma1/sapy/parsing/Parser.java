@@ -28,8 +28,8 @@ public class Parser
 	{
 		tokenLst = listaToken;
 		variabili = VarRepository.getInstance();
-		listaIstruzioni = creaListaDiIstruzioni(tokenLst);
 		etichette = new HashSet<Integer>();
+		listaIstruzioni = creaListaDiIstruzioni(tokenLst);
 	}
 	
 	public ArrayList<Istruzione> getListaIstruzioni()
@@ -61,7 +61,7 @@ public class Parser
 			}
 			else if(t.ritornaTipoToken().equals(Tok.REM))
 			{
-				while(!t.ritornaTipoToken().equals(Tok.EOL)||!t.ritornaTipoToken().equals(Tok.DUEPUNTI))
+				while(!t.ritornaTipoToken().equals(Tok.EOL))
 				{
 					i++;
 					if(!(i<listaToken.size()))
@@ -112,7 +112,7 @@ public class Parser
 				{
 					i++;
 					t = listaToken.get(i);
-					while(!t.ritornaTipoToken().equals(Tok.EOL)||!t.ritornaTipoToken().equals(Tok.DUEPUNTI))
+					while(!t.ritornaTipoToken().equals(Tok.EOL)&&!t.ritornaTipoToken().equals(Tok.DUEPUNTI))
 					{
 						lineaCodice.add(t);
 						i++;
@@ -121,20 +121,7 @@ public class Parser
 						t = listaToken.get(i);
 					}
 					i++;
-					/*if(lineaCodice.size()==1)
-					{
-						if(lineaCodice.get(0).ritornaTipoToken().equals(Tok.STRINGA))
-						{
-							valVariabile = lineaCodice.get(0);
-							VariabileIstruzione istrVariabile = new VariabileIstruzione(nomeVar,valVariabile,etichetta);
-							istruzioneLst.add(istrVariabile);
-							istrVariabile.esegui();
-							lineaCodice.clear();
-							continue;
-						}
-					}*/
-					/////////////////
-					VariabileIstruzione istrVariabile = new VariabileIstruzione(nomeVar,lineaCodice,etichetta);
+					VariabileIstruzione istrVariabile = new VariabileIstruzione(nomeVar,(ArrayList<Token>)lineaCodice.clone(),etichetta);
 					istruzioneLst.add(istrVariabile);
 					lineaCodice.clear();
 				}
@@ -164,35 +151,19 @@ public class Parser
 					t = listaToken.get(i);
 				}
 				i++;
-				/*for(int j=0;j<lineaCodice.size();j++)
-					if(lineaCodice.get(j).ritornaTipoToken().equals(Tok.VARIABILE))
-					{
-						String nome = (String)lineaCodice.get(j).ritornaValore();
-						Token valoreVariabile = variabili.getVariabile(nome);
-						if(!valoreVariabile.equals(null))
-							lineaCodice.set(j, valoreVariabile);
-					}
-				Condizione cond = new Condizione(lineaCodice);
-				condizione = (Booleano)cond.getRisultato();*/
-				ArrayList<Token> condizione = lineaCodice;
+				ArrayList<Token> condizione = (ArrayList<Token>)lineaCodice.clone();
 				lineaCodice.clear();
 				t = listaToken.get(i);
 				while(!t.ritornaTipoToken().equals(Tok.ENDIF))
 				{
 					lineaCodice.add(t);
 					i++;
+					if(!(i<listaToken.size()))
+						break;
 					t = listaToken.get(i);
 				}
 				i++;
-				/*for(int j=0;j<lineaCodice.size();j++)
-					if(lineaCodice.get(j).ritornaTipoToken().equals(Tok.VARIABILE))
-					{
-						String nome = (String)lineaCodice.get(j).ritornaValore();
-						Token valoreVariabile = variabili.getVariabile(nome);
-						if(!valoreVariabile.equals(null))
-							lineaCodice.set(j, valoreVariabile);
-					}*/
-				istrIf = new IfIstruzione(condizione,creaListaDiIstruzioni(lineaCodice),etichetta);
+				istrIf = new IfIstruzione(condizione,creaListaDiIstruzioni((ArrayList<Token>)lineaCodice.clone()),etichetta);
 				lineaCodice.clear();
 				istruzioneLst.add(istrIf);
 			}
@@ -229,18 +200,7 @@ public class Parser
 						t = listaToken.get(i);
 					}
 					i++;
-					/*for(int j=0;j<lineaCodice.size();j++)
-						if(lineaCodice.get(j).ritornaTipoToken().equals(Tok.VARIABILE))
-						{
-							String nome = (String)lineaCodice.get(j).ritornaValore();
-							Token valoreVariabile = variabili.getVariabile(nome);
-							if(!valoreVariabile.equals(null))
-								lineaCodice.set(j, valoreVariabile);
-						}
-					ExprMatematica esprMat = new ExprMatematica(lineaCodice);
-					da = (Intero)esprMat.getRisultato();
-					variabili.setVariabile(varItera, da);*/
-					da = lineaCodice;
+					da = (ArrayList<Token>)lineaCodice.clone();
 					lineaCodice.clear();
 					t = listaToken.get(i);
 					while(!t.ritornaTipoToken().equals(Tok.DO))
@@ -250,17 +210,7 @@ public class Parser
 						t = listaToken.get(i);
 					}
 					i++;
-					/*for(int j=0;j<lineaCodice.size();j++)
-						if(lineaCodice.get(j).ritornaTipoToken().equals(Tok.VARIABILE))
-						{
-							String nome = (String)lineaCodice.get(j).ritornaValore();
-							Token valoreVariabile = variabili.getVariabile(nome);
-							if(!valoreVariabile.equals(null))
-								lineaCodice.set(j, valoreVariabile);
-						}
-					esprMat = new ExprMatematica(lineaCodice);
-					finoA = (Intero)esprMat.getRisultato();*/
-					finoA = lineaCodice;
+					finoA = (ArrayList<Token>)lineaCodice.clone();
 					lineaCodice.clear();
 					t = listaToken.get(i);
 					while(!t.ritornaTipoToken().equals(Tok.NEXT))
@@ -270,15 +220,7 @@ public class Parser
 						t = listaToken.get(i);
 					}
 					i++;
-					/*for(int j=0;j<lineaCodice.size();j++)
-						if(lineaCodice.get(j).ritornaTipoToken().equals(Tok.VARIABILE))
-						{
-							String nome = (String)lineaCodice.get(j).ritornaValore();
-							Token valoreVariabile = variabili.getVariabile(nome);
-							if(!valoreVariabile.equals(null))
-								lineaCodice.set(j, valoreVariabile);
-						}*/
-					istrFor = new ForIstruzione(da,finoA,varItera,creaListaDiIstruzioni(lineaCodice),etichetta);
+					istrFor = new ForIstruzione(da,finoA,varItera,creaListaDiIstruzioni((ArrayList<Token>)lineaCodice.clone()),etichetta);
 					lineaCodice.clear();
 					istruzioneLst.add(istrFor);
 				}
@@ -302,7 +244,7 @@ public class Parser
 				lineaCodice.clear();
 				i++;
 				t = listaToken.get(i);
-				while(!t.ritornaTipoToken().equals(Tok.EOL)||!t.ritornaTipoToken().equals(Tok.DUEPUNTI))
+				while(!t.ritornaTipoToken().equals(Tok.EOL)&&!t.ritornaTipoToken().equals(Tok.DUEPUNTI))
 				{
 					lineaCodice.add(t);
 					i++;
@@ -311,43 +253,7 @@ public class Parser
 					t = listaToken.get(i);
 				}
 				i++;
-				/*
-				for(int j=0;j<lineaCodice.size();j++)
-					if(lineaCodice.get(j).ritornaTipoToken().equals(Tok.VARIABILE))
-					{
-						String nome = (String)lineaCodice.get(j).ritornaValore();
-						Token valoreVariabile = variabili.getVariabile(nome);
-						if(!valoreVariabile.equals(null))
-							lineaCodice.set(j, valoreVariabile);
-					}
-				if(lineaCodice.size()==1)
-				{
-					if(lineaCodice.get(0).ritornaTipoToken().equals(Tok.STRINGA))
-					{
-						daStampare = lineaCodice.get(0);
-						PrintIstruzione istrPrint = new PrintIstruzione(daStampare,etichetta);
-						istruzioneLst.add(istrPrint);
-						lineaCodice.clear();
-						continue;
-					}
-				}
-				if(Confronto.isExprMatematica(lineaCodice))
-				{
-					ExprMatematica em = new ExprMatematica(lineaCodice);
-					daStampare = em.getRisultato();
-				}
-				else if(Condizione.isExprBooleana(lineaCodice))
-				{
-					ExprBooleana eb = new ExprBooleana(lineaCodice);
-					daStampare = eb.getRisultato();
-				}
-				else if(isConfronto(lineaCodice))
-				{
-					Condizione cond = new Condizione(lineaCodice);
-					daStampare = cond.getRisultato();
-				}
-				else throw new ParsingException();*/
-				daStampare = lineaCodice;
+				daStampare = (ArrayList<Token>)lineaCodice.clone();
 				PrintIstruzione istrPrint = new PrintIstruzione(daStampare,etichetta);
 				istruzioneLst.add(istrPrint);
 				lineaCodice.clear();		
@@ -413,20 +319,5 @@ public class Parser
 	public ProgrammaEseguibile creaProgrammaEseguibile()
 	{
 		return new ProgrammaEseguibile(getListaIstruzioni());
-	}
-	
-	public static boolean isConfronto(ArrayList<Token> termineDiConfronto)
-	{
-		Tok[] listaConfr = new Tok[] {Tok.STRINGA,Tok.DIVERSO,Tok.MAGGIORE,Tok.MAGGIOREUGUALE,Tok.MINORE,Tok.MINOREUGUALE,Tok.UGUALE,Tok.BOOLEANO,Tok.OR,Tok.AND,Tok.NOT,Tok.INTERO,Tok.PIU,Tok.MENO,Tok.PER,Tok.DIVISO,Tok.MODULO,Tok.LEFT_PAR,Tok.RIGHT_PAR};
-		ArrayList<Tok> exprConfr = new ArrayList<Tok>();
-		for(Tok t : listaConfr)
-			exprConfr.add(t);
-		Iterator i = termineDiConfronto.iterator();
-		while(i.hasNext())
-		{
-			Token t = (Token)i.next();
-			if(!exprConfr.contains(t.ritornaTipoToken())) return false;
-		}
-		return true;
 	}	
 }

@@ -14,6 +14,11 @@ public class ProgrammaEseguibile
 		this.programma = programma;
 	}
 	
+	public ArrayList<Istruzione> getListaIstruzioni()
+	{
+		return programma;
+	}
+	
 	public void esegui() throws Exception
 	{		
 		for(int i=0;i<programma.size();i++)

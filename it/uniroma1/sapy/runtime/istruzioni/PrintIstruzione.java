@@ -1,7 +1,6 @@
 package it.uniroma1.sapy.runtime.istruzioni;
 
 import java.util.*;
-
 import it.uniroma1.sapy.exception.*;
 import it.uniroma1.sapy.lexer.token.*;
 import it.uniroma1.sapy.parsing.Parser;
@@ -10,8 +9,8 @@ import it.uniroma1.sapy.runtime.VarRepository;
 
 public class PrintIstruzione implements Istruzione
 {
-	ArrayList<Token> daStampare;
-	Intero etichetta;
+	private ArrayList<Token> daStampare;
+	private Intero etichetta;
 	
 	public PrintIstruzione(ArrayList<Token> daStampare, Intero etichetta)
 	{
@@ -22,46 +21,50 @@ public class PrintIstruzione implements Istruzione
 	@Override
 	public Object esegui() throws Exception
 	{
-		Object stampa;
+		Token stampa;
 		VarRepository variabili = VarRepository.getInstance();
-		for(int j=0;j<daStampare.size();j++)
-			if(daStampare.get(j).ritornaTipoToken().equals(Tok.VARIABILE))
+		ArrayList<Token> daStampareProvvisoria = (ArrayList<Token>)daStampare.clone();
+		for(int j=0;j<daStampareProvvisoria.size();j++)
+			if(daStampareProvvisoria.get(j).ritornaTipoToken().equals(Tok.VARIABILE))
 			{
-				String nome = (String)daStampare.get(j).ritornaValore();
+				String nome = (String)daStampareProvvisoria.get(j).ritornaValore();
 				Token valoreVariabile = variabili.getVariabile(nome);
 				if(!valoreVariabile.equals(null))
-					daStampare.set(j, valoreVariabile);
+					daStampareProvvisoria.set(j, valoreVariabile);
 			}
-		if(daStampare.size()==1)
+		if(daStampareProvvisoria.size()==1)
 		{
-			if(daStampare.get(0).ritornaTipoToken().equals(Tok.STRINGA))
+			if(daStampareProvvisoria.get(0).ritornaTipoToken().equals(Tok.STRINGA))
 			{
-				stampa = daStampare.get(0).ritornaValore();
-				System.out.println(stampa);
+				stampa = daStampareProvvisoria.get(0);
+				System.out.println(stampa.ritornaValore());
 				return null;
 			}
 		}
-		if(Confronto.isExprMatematica(daStampare))
+		if(Condizione.isExprMatematica(daStampareProvvisoria))
 		{
-			ExprMatematica em = new ExprMatematica(daStampare);
+			ExprMatematica em = new ExprMatematica(daStampareProvvisoria);
 			stampa = em.getRisultato();
 		}
-		else if(Condizione.isExprBooleana(daStampare))
+		else if(Condizione.isExprBooleana(daStampareProvvisoria))
 		{
-			ExprBooleana eb = new ExprBooleana(daStampare);
+			ExprBooleana eb = new ExprBooleana(daStampareProvvisoria);
 			stampa = eb.getRisultato();
 		}
-		else if(Parser.isConfronto(daStampare))
+		else if(Condizione.isConfronto(daStampareProvvisoria))
 		{
-			Condizione cond = new Condizione(daStampare);
+			Condizione cond = new Condizione(daStampareProvvisoria);
 			stampa = cond.getRisultato();
 		}
 		else throw new ParsingException();
-		System.out.println(stampa);
+		System.out.println(stampa.ritornaValore());
 		return null;
 	}
 
 	@Override
-	public Intero getLabel(){ return etichetta; }
-	
+	public Intero getLabel()
+	{
+		if(etichetta==null) return null;
+		return etichetta;
+	}
 }

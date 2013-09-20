@@ -21,6 +21,7 @@ public class IfIstruzione implements Istruzione
 	@Override
 	public Intero getLabel()
 	{
+		if(etichetta==null) return null;
 		return etichetta;
 	}
 

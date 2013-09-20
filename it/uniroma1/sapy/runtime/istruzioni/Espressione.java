@@ -15,10 +15,10 @@ abstract public class Espressione
 	 * Costruttore
 	 * @param ArrayList<Token> - Espressione booleana o aritmetica, formata da Token
 	 */
-	public Espressione(ArrayList<Token> t)
+	public Espressione(ArrayList<Token> espressioneDaAnalizzare)
 	{
 		point = 0;
-		text = t;
+		text = espressioneDaAnalizzare;
 	}
 	
 	/**

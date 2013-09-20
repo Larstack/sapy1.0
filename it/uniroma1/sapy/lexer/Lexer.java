@@ -11,6 +11,7 @@ import it.uniroma1.sapy.lexer.token.*;
 public class Lexer 
 {
 	private ArrayList<Token> listaToken;
+	private String sorgente;
 	
 	/**
 	 * Costruttore<br />
@@ -18,35 +19,28 @@ public class Lexer
 	 * @param String - Percorso del file sorgente
 	 * @exception FileNotFoundException - Viene lanciata se il file sorgente non viene trovato  
 	 */
-	public Lexer(String nomeFile)
+	public Lexer(String sorgente)
 	{
 		listaToken = new ArrayList<Token>();
-		if(nomeFile != null)	
-		{
-			File f = new File(nomeFile);		
-			try
-			{
-				Scanner s = new Scanner(f);
-				esaminaSorgente(s);
-				s.close();
-			}
-			catch(FileNotFoundException e)
-			{
-				e.printStackTrace();
-			}
-		}
+		this.sorgente = sorgente;
 	}
 	
 	/**
 	 * Esegue l'analisi del sorgente linea per linea e costruisce la lista di Token
 	 * @param Scanner - Scanner passato dal costruttore dopo aver caricato il sorgente
 	 */
-	public void esaminaSorgente(Scanner s)
+	public void esaminaSorgente()
 	{
-		while(s.hasNextLine())
+		String[] sorgenteSplit = sorgente.split("\n");
+		int nLinea = 0;
+		while(nLinea<sorgenteSplit.length)
 		{
-			String linea = s.nextLine();
-			if(linea.equals("")) continue;
+			String linea = sorgenteSplit[nLinea];
+			if(linea.equals(""))
+			{
+				nLinea++;
+				continue;
+			}
 			String[] lineaSplit = linea.split(" ");
 			for(int i=0;i<lineaSplit.length;i++)
 			{
@@ -62,7 +56,7 @@ public class Lexer
 					int indiceVirg = l2.indexOf('"');
 					if(indiceVirg != -1)
 					{
-						stringaToken = l2.substring(0, l2.length());
+						stringaToken = l2.substring(0, l2.length()-1);
 						listaToken.add(new Stringa(stringaToken));
 					}
 					else
@@ -92,6 +86,7 @@ public class Lexer
 				else esaminaBlocco(l);
 			}
 			listaToken.add(new Eol());
+			nLinea++;
 		}
 	}
 	
@@ -324,11 +319,19 @@ public class Lexer
 		}
 		return s;
 	}
-	
-	public static void main(String[] args) 
+	//////////////////////////////////////////////////////////////////////
+	public static void main(String[] args) throws Exception
 	{
-		Lexer lex = new Lexer(args[0]);
+		//File f = new File(args[0]);
+		File f = new File("/home/leonardo/Development/Programmazione(Navigli)/prg/prg4.sapy");
+		Scanner s = new Scanner(f);
+		String sorg = "";		
+		while(s.hasNextLine()){sorg=sorg+s.nextLine()+"\n";}
+		sorg = sorg.substring(0, sorg.length());
+		Lexer lex = new Lexer(sorg);
+		lex.esaminaSorgente();
 		System.out.print(lex.toString());
+		s.close();
 	}
 
 }

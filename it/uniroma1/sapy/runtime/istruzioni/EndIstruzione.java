@@ -9,8 +9,12 @@ public class EndIstruzione implements Istruzione
 	public EndIstruzione(Intero etichetta){ this.etichetta = etichetta; }
 	
 	@Override
-	public Intero getLabel(){ return etichetta; }
-
+	public Intero getLabel()
+	{
+		if(etichetta==null) return null;
+		return etichetta;
+	}
+	
 	@Override
 	public Object esegui()
 	{

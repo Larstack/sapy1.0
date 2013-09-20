@@ -17,7 +17,11 @@ public class InputIstruzione implements Istruzione
 	}
 
 	@Override
-	public Intero getLabel() { return etichetta; }
+	public Intero getLabel()
+	{
+		if(etichetta==null) return null;
+		return etichetta;
+	}
 	
 	@Override
 	public Object esegui()

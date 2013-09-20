@@ -14,7 +14,11 @@ public class GotoIstruzione implements Istruzione
 	}
 	
 	@Override
-	public Intero getLabel(){ return etichetta; }
+	public Intero getLabel()
+	{
+		if(etichetta==null) return null;
+		return etichetta;
+	}
 	
 	public Intero getEtichetta(){ return label; }
 
