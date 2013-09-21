@@ -27,11 +27,11 @@ public class InputIstruzione implements Istruzione
 	public Object esegui()
 	{
 		Scanner s = new Scanner(System.in);
-		String input = s.next();
+		String input = s.nextLine();
+		s.close();
 		valoreVariabile = input;
 		VarRepository variabili = VarRepository.getInstance();
 		variabili.setVariabile(varStringa, new Stringa(valoreVariabile));
-		s.close();
 		return null;
 	}
 	

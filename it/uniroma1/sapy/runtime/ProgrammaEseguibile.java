@@ -3,6 +3,7 @@ package it.uniroma1.sapy.runtime;
 import java.util.*;
 
 import it.uniroma1.sapy.exception.*;
+import it.uniroma1.sapy.lexer.token.Token;
 import it.uniroma1.sapy.runtime.istruzioni.*;
 
 public class ProgrammaEseguibile
@@ -30,14 +31,15 @@ public class ProgrammaEseguibile
 				boolean labeltrovata = false;
 				for(int j=0;j<programma.size();j++)
 				{
-					if(programma.get(j).getLabel().ritornaValore().equals(label))
+					if(programma.get(j).getLabel()!=null&&programma.get(j).getLabel().ritornaValore().equals(label))
 					{
-						i = j;
+						i = j-1;
 						labeltrovata = true;
 						break;
 					}
 				}
 				if(!labeltrovata) throw new EtichettaNonTrovataException(label);
+				continue;
 			}
 			Object valRitorno = istr.esegui();
 			if(valRitorno!=null)
@@ -45,9 +47,9 @@ public class ProgrammaEseguibile
 				boolean labeltrovata = false;
 				for(int j=0;j<programma.size();j++)
 				{
-					if(programma.get(j).getLabel().ritornaValore().equals(valRitorno))
+					if(programma.get(j).getLabel()!=null&&programma.get(j).getLabel().ritornaValore().equals(valRitorno))
 					{
-						i = j;
+						i = j-1;
 						labeltrovata = true;
 						break;
 					}

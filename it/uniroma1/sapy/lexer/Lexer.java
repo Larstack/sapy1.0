@@ -56,8 +56,10 @@ public class Lexer
 					int indiceVirg = l2.indexOf('"');
 					if(indiceVirg != -1)
 					{
-						stringaToken = l2.substring(0, l2.length()-1);
+						stringaToken = l2.substring(0, indiceVirg);
 						listaToken.add(new Stringa(stringaToken));
+						if(l2.length()-stringaToken.length()>1)
+							esaminaBlocco(l2.substring(indiceVirg+1, l2.length()));
 					}
 					else
 					{

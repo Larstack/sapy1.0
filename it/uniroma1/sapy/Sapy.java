@@ -1,17 +1,19 @@
 package it.uniroma1.sapy;
 
-import it.uniroma1.sapy.lexer.Lexer;
-import it.uniroma1.sapy.parsing.Parser;
-import it.uniroma1.sapy.runtime.ProgrammaEseguibile;
+import java.io.*;
+import java.util.*;
+import it.uniroma1.sapy.runtime.Interprete;
 
-public class Sapy////////////////////
+public class Sapy
 {
 	public static void main(String[] args) throws Exception
-	{		
-		Lexer lex = new Lexer(args[0]);
-		Parser parser = new Parser(lex.getListaToken());
-		ProgrammaEseguibile programma = new ProgrammaEseguibile(parser.getListaIstruzioni());
-		programma.esegui();
-		
+	{	
+		File f = new File(args[0]);
+		Scanner s = new Scanner(f);
+		String sorg = "";		
+		while(s.hasNextLine()){sorg=sorg+s.nextLine()+"\n";}
+		sorg = sorg.substring(0, sorg.length());
+		s.close();
+		new Interprete(sorg);
 	}
 }

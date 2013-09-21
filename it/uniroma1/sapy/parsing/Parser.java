@@ -52,6 +52,7 @@ public class Parser
 			{
 				lineaCodice.add(t);
 				i++;
+				t = listaToken.get(i);
 			}
 			if(t.ritornaTipoToken().equals(Tok.DUEPUNTI)||t.ritornaTipoToken().equals(Tok.EOL))
 			{
@@ -311,7 +312,6 @@ public class Parser
 				lineaCodice.clear();
 			}
 			else throw new ParsingException();
-			
 		}
 		return istruzioneLst;
 	}

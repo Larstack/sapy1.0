@@ -51,9 +51,9 @@ public class IfIstruzione implements Istruzione
 					boolean labelTrovata = false;
 					for(int k=0;k<istruzioni.size();k++)
 					{
-						if(istruzioni.get(k).getLabel().ritornaValore().equals(label))
+						if(istruzioni.get(k).getLabel()!=null&&istruzioni.get(k).getLabel().ritornaValore().equals(label))
 						{
-							i = k;
+							i = k-1;
 							labelTrovata = true;
 							break;
 						}
@@ -64,15 +64,15 @@ public class IfIstruzione implements Istruzione
 				else
 				{
 					Object ritorno = istruzioni.get(i).esegui();
-					if(!(ritorno==null))
+					if(ritorno!=null)
 					{
 						ritorno = (int)ritorno;
 						boolean labelTrovata = false;
 						for(int k=0;k<istruzioni.size();k++)
 						{
-							if(istruzioni.get(k).getLabel().ritornaValore().equals(ritorno))
+							if(istruzioni.get(k).getLabel()!=null&&istruzioni.get(k).getLabel().ritornaValore().equals(ritorno))
 							{
-								i = k;
+								i = k-1;
 								labelTrovata = true;
 								break;
 							}
