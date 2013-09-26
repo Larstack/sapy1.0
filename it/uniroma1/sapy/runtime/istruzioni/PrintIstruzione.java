@@ -4,14 +4,30 @@ import java.util.*;
 import it.uniroma1.sapy.exception.*;
 import it.uniroma1.sapy.lexer.token.*;
 import it.uniroma1.sapy.parsing.Parser;
-import it.uniroma1.sapy.runtime.VarRepository;
+import it.uniroma1.sapy.runtime.*;
+import it.uniroma1.sapy.runtime.espressioni.*;
 
-
+/**
+ * Istruzione PRINT.<br />
+ * Stampa a video una stringa, il risultato di un'espressione o il contenuto di una variabile.
+ */
 public class PrintIstruzione implements Istruzione
 {
+	/**
+	 * Elemento(stringa, espressione o variabile) da stampare.
+	 */
 	private ArrayList<Token> daStampare;
+	
+	/**
+	 * Etichetta che identifica l'istruzione, utilizzata dall'istruzione GOTO.
+	 */
 	private Intero etichetta;
 	
+	/**
+	 * Costruttore
+	 * @param daStampare - elemento da stampare(stringa, espressione o variabile).
+	 * @param etichetta - etichetta che identifica l'istruzione.
+	 */
 	public PrintIstruzione(ArrayList<Token> daStampare, Intero etichetta)
 	{
 		this.daStampare = daStampare;
@@ -19,7 +35,7 @@ public class PrintIstruzione implements Istruzione
 	}
 	
 	@Override
-	public Object esegui() throws Exception
+	public Object esegui() throws ExtraTokenException, OperazioneNonValidaException, ParentesiParsingException, OperandoMissingException, ParsingException, OperatoreMissingException
 	{
 		Token stampa;
 		VarRepository variabili = VarRepository.getInstance();

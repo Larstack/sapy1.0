@@ -1,12 +1,12 @@
 package it.uniroma1.sapy.exception;
 
 /**
- * Eccezione lanciata in caso di errore durante il parsing
+ * Eccezione lanciata in caso di errore generico durante il parsing.
  */
 public class ParsingException extends Exception
 {
 	/**
-	 * Stampa l'errore che si è verificato
+	 * Stampa l'errore che si è verificato.
 	 */
 	@Override
 	public void printStackTrace()

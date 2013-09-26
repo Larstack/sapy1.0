@@ -1,7 +1,7 @@
 package it.uniroma1.sapy.lexer.token;
 
 /**
- * Tipi di Token
+ * Tipi di Token validi.
  */
 public enum Tok
 {
@@ -11,21 +11,26 @@ public enum Tok
 	NEXT("Next"), VARIABILE("Variabile"), FUNZIONE("Funzione"), GOTO("Goto"), PRINT("Print"), INPUT("Input"), EOL("Eol");
 	
 	/**
-	 * Costruttore
+	 * Nome della classe di riferimento del Token.
 	 */
-	private String s;
-	Tok(String s)
+	private String token;
+	
+	/**
+	 * Costruttore
+	 * @param token - nome della classe di riferimento del Token.
+	 */
+	Tok(String token)
 	{
-		this.s = s;
+		this.token = token;
 	}
 	
 	/**
-	 * Ritorna il valore associato al token
-	 * @return String - Valore associato al token
+	 * Ritorna il nome della classe di riferimento del Token.
+	 * @return nome della classe di riferimento del Token.
 	 */
 	public String getValoreToken()
 	{
-		return s;
+		return token;
 	}
 }
 

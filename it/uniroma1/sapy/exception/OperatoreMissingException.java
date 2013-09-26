@@ -1,12 +1,12 @@
 package it.uniroma1.sapy.exception;
 
 /**
- * Eccezione lanciata se durante il parsing si riscontra un errore per un operatore mancante
+ * Eccezione lanciata se durante il parsing si riscontra un errore a causa di un operatore mancante.
  */
 public class OperatoreMissingException extends Exception
 {
 	/**
-	 * Stampa il messaggio di errore
+	 * Stampa il messaggio di errore.
 	 */
 	@Override
 	public void printStackTrace()
@@ -14,6 +14,9 @@ public class OperatoreMissingException extends Exception
 		System.out.println("Impossibile eseguire l'operazione, a causa di un operatore mancante");
 	}
 	
+	/**
+	 * Restituisce il messaggio di errore sotto forma di String.
+	 */
 	@Override
 	public String getMessage()
 	{

@@ -3,26 +3,29 @@ package it.uniroma1.sapy.exception;
 import it.uniroma1.sapy.lexer.token.Tok;
 
 /**
- * Eccezione lanciata in caso di errore di sintassi 
+ * Eccezione lanciata in caso di errore di sintassi.
  */
 public class SintassiException extends Exception
 {
-	private Tok t;
+	/**
+	 * Tok che definisce il tipo di Token previsto.
+	 */
+	private Tok tipo;
 	/**
 	 * Costruttore
-	 * @param Tok - Il tipo di token previsto
+	 * @param tipo - tipo di token previsto.
 	 */
-	public SintassiException(Tok t)
+	public SintassiException(Tok tipo)
 	{
-		this.t = t;
+		this.tipo = tipo;
 	}
 	
 	/**
-	 * Stampa l'errore che si è verificato
+	 * Stampa l'errore che si è verificato.
 	 */
 	@Override
 	public void printStackTrace()
 	{
-		System.out.println("Errore di sintassi - Previsto il token "+t);
+		System.out.println("Errore di sintassi - Previsto il token "+tipo);
 	}
 }

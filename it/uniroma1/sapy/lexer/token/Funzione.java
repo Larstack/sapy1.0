@@ -1,14 +1,14 @@
 package it.uniroma1.sapy.lexer.token;
 
 /**
- * Definisce il token FUNZIONE
+ * Token di tipo FUNZIONE.
  */
 public class Funzione extends Token
 {
 	
 	/**
 	 * Costruttore
-	 * @param String - Valore del Token 
+	 * @param valoreToken - stringa non riconosciuta come Token dal Lexer.
 	 */
 	public Funzione(String valoreToken)
 	{

@@ -1,16 +1,44 @@
 package it.uniroma1.sapy.runtime.istruzioni;
 
 import java.util.ArrayList;
-import it.uniroma1.sapy.lexer.token.*;
-import it.uniroma1.sapy.runtime.VarRepository;
 
+import it.uniroma1.sapy.exception.*;
+import it.uniroma1.sapy.lexer.token.*;
+import it.uniroma1.sapy.runtime.*;
+import it.uniroma1.sapy.runtime.espressioni.*;
+
+/**
+ * Istruzione IF.<br />
+ * Se la condizione è true, esegue il blocco istruzioni.
+ */
 public class IfIstruzione implements Istruzione
 {
+	/**
+	 * Blocco di istruzioni che viene eseguito se la condizione è true.
+	 */
 	private ArrayList<Istruzione> istruzioni;
+	
+	/**
+	 * Segnala se la condizione è true o false.
+	 */
 	private boolean condizione;
+	
+	/**
+	 * Etichetta che identifica l'istruzione, utilizzata dall'istruzione GOTO.
+	 */
 	private Intero etichetta;
+	
+	/**
+	 * Condizione da verificare.
+	 */
 	private ArrayList<Token> lineaCodice;
 	
+	/**
+	 * Costruttore
+	 * @param lineaCodice - condizione da verificare.
+	 * @param istruzioni - blocco di istruzioni da eseguire.
+	 * @param etichetta - etichetta che identifica l'istruzione.
+	 */
 	public IfIstruzione(ArrayList<Token> lineaCodice, ArrayList<Istruzione> istruzioni,Intero etichetta)
 	{
 		this.lineaCodice = lineaCodice;

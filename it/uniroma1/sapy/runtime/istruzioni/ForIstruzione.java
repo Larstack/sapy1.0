@@ -2,19 +2,56 @@ package it.uniroma1.sapy.runtime.istruzioni;
 
 import java.util.ArrayList;
 
+import it.uniroma1.sapy.exception.*;
 import it.uniroma1.sapy.lexer.token.*;
-import it.uniroma1.sapy.runtime.VarRepository;
+import it.uniroma1.sapy.runtime.*;
+import it.uniroma1.sapy.runtime.espressioni.*;
 
+/**
+ * Istruzione FOR.<br />
+ * Esegue un ciclo iterativo di un blocco di istruzioni.
+ */
 public class ForIstruzione implements Istruzione
 {
 	
+	/**
+	 * Espressione che, risolta, costituisce il valore di partenza della variabile su cui si itera.
+	 */
 	private ArrayList<Token> da;
+	
+	/**
+	 * Espressione che, risolta, costituisce il valore finale della variabile contatore.
+	 */
 	private ArrayList<Token> finoA;
+	
+	/**
+	 * Nome della variabile contatore.
+	 */
 	private String varItera;
+	
+	/**
+	 * Blocco di istruzioni da iterare.
+	 */
 	private ArrayList<Istruzione> istruzioni;
+	
+	/**
+	 * Etichetta che identifica l'istruzione, utilizzata dall'istruzione GOTO.
+	 */
 	private Intero etichetta;
+	
+	/**
+	 * Booleano che segnala se la variabile contatore dev'essere incrementata o decrementata.
+	 */
 	private boolean isDecrescente = false;
 	
+	/**
+	 * Costruttore
+	 * @param da - valore di partenza della variabile contatore.
+	 * @param finoA - valore finale della variabile contatore.
+	 * @param varItera - nome della variabile contatore.
+	 * @param istruzioni - blocco di istruzioni da iterare.
+	 * @param etichetta - etichetta che identifica l'istruzione.
+	 */
 	public ForIstruzione(ArrayList<Token> da, ArrayList<Token> finoA, String varItera, ArrayList<Istruzione> istruzioni, Intero etichetta)
 	{
 		this.da = da;

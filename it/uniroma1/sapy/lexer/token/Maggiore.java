@@ -1,7 +1,7 @@
 package it.uniroma1.sapy.lexer.token;
 
 /**
- * Definisce il token MAGGIORE ">"
+ * Token operatore > (MAGGIORE).
  */
 public class Maggiore extends Token
 {

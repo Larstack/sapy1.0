@@ -1,7 +1,7 @@
 package it.uniroma1.sapy.lexer.token;
 
 /**
- * Definisce il token EOL (Fine linea)
+ * Token di tipo EOL (fine linea).
  */
 public class Eol extends Token {
 

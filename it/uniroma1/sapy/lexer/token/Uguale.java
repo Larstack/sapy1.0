@@ -1,7 +1,7 @@
 package it.uniroma1.sapy.lexer.token;
 
 /**
- * Definisce il token UGUALE "="
+ * Token operatore = (UGUALE).
  */
 public class Uguale extends Token
 {

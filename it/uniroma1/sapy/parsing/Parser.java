@@ -9,37 +9,67 @@ import it.uniroma1.sapy.runtime.VarRepository;
 import it.uniroma1.sapy.runtime.istruzioni.*;
 
 /**
- * Partendo da una lista di token, trasforma quest'ultima in una lista di istruzioni
- * organizzata in un ProgrammaEseguibile. 
+ * Trasforma una lista di Token in una lista di istruzioni, organizzata in un ProgrammaEseguibile.
  * @author Leonardo Andres Ricciotti
  */
 public class Parser
 {
+	/**
+	 * Lista di Token data in input al Parser.
+	 */
 	private ArrayList<Token> tokenLst;
+	
+	/**
+	 * Lista di istruzioni costruita durante il parsing.
+	 */
 	private ArrayList<Istruzione> listaIstruzioni;
+	
+	/**
+	 * Istanza di VarRepository, dove salvare il valore delle variabili.
+	 */
 	private VarRepository variabili;
+	
+	/**
+	 * Set per memorizzare le etichette delle istruzioni, per evitare duplicati.
+	 */
 	private HashSet<Integer> etichette;
 	
 	/**
 	 * Costruttore
-	 * @param ArrayList<Token> - Lista di elementi di tipo Token
+	 * @param listaToken - lista di elementi di tipo Token.
 	 */
-	public Parser(ArrayList<Token> listaToken) throws Exception
+	public Parser(ArrayList<Token> listaToken)
 	{
 		tokenLst = listaToken;
 		variabili = VarRepository.getInstance();
 		etichette = new HashSet<Integer>();
-		listaIstruzioni = creaListaDiIstruzioni(tokenLst);
+		try
+		{
+			listaIstruzioni = creaListaDiIstruzioni(tokenLst);
+		}
+		catch (EtichettaDuplicataException | ParsingException | TokenInaspettatoException e)
+		{
+			e.printStackTrace();
+		}
 	}
 	
+	/**
+	 * Ritorna la lista di istruzioni costruita durante il parsing.	
+	 * @return lista di istruzioni.
+	 */
 	public ArrayList<Istruzione> getListaIstruzioni()
 	{
 		return listaIstruzioni;
 	}
+	
 	/**
-	 * Crea la lista di istruzioni interpretate
+	 * Crea la lista di istruzioni.
+	 * @param listaToken - lista di Token da trasformare in istruzioni.
+	 * @throws EtichettaDuplicataException - se si riscontra un'etichetta duplicata.
+	 * @throws TokenInaspettatoException - se il Token atteso era di un altro tipo.
+	 * @throws ParsingException - se il Token analizzato non viene individuato come Token valido.
 	 */
-	public ArrayList<Istruzione> creaListaDiIstruzioni(ArrayList<Token> listaToken) throws Exception
+	public ArrayList<Istruzione> creaListaDiIstruzioni(ArrayList<Token> listaToken) throws EtichettaDuplicataException, TokenInaspettatoException, ParsingException
 	{
 		ArrayList<Istruzione> istruzioneLst = new ArrayList<Istruzione>();
 		ArrayList<Token> lineaCodice = new ArrayList<Token>();
@@ -85,7 +115,7 @@ public class Parser
 							throw new EtichettaDuplicataException((int)etichetta.ritornaValore());
 						etichette.add((int)etichetta.ritornaValore());
 					}
-					else throw new ParsingException();
+					else throw new TokenInaspettatoException();
 				}
 				lineaCodice.clear();
 				EndIstruzione istrEnd = new EndIstruzione(etichetta);
@@ -105,7 +135,7 @@ public class Parser
 							throw new EtichettaDuplicataException((int)etichetta.ritornaValore());
 						etichette.add((int)etichetta.ritornaValore());
 					}
-					else throw new ParsingException();
+					else throw new TokenInaspettatoException();
 				}
 				lineaCodice.clear();
 				t = listaToken.get(i);
@@ -140,7 +170,7 @@ public class Parser
 							throw new EtichettaDuplicataException((int)etichetta.ritornaValore());
 						etichette.add((int)etichetta.ritornaValore());
 					}
-					else throw new ParsingException();
+					else throw new TokenInaspettatoException();
 				}
 				lineaCodice.clear();
 				i++;
@@ -185,7 +215,7 @@ public class Parser
 							throw new EtichettaDuplicataException((int)etichetta.ritornaValore());
 						etichette.add((int)etichetta.ritornaValore());
 					}
-					else throw new ParsingException();
+					else throw new TokenInaspettatoException();
 				}
 				lineaCodice.clear();
 				t = listaToken.get(i);
@@ -225,7 +255,7 @@ public class Parser
 					lineaCodice.clear();
 					istruzioneLst.add(istrFor);
 				}
-				else throw new ParsingException();
+				else throw new TokenInaspettatoException();
 			}
 			else if(t.ritornaTipoToken().equals(Tok.PRINT))
 			{
@@ -240,7 +270,7 @@ public class Parser
 							throw new EtichettaDuplicataException((int)etichetta.ritornaValore());
 						etichette.add((int)etichetta.ritornaValore());
 					}
-					else throw new ParsingException();
+					else throw new TokenInaspettatoException();
 				}
 				lineaCodice.clear();
 				i++;
@@ -273,13 +303,13 @@ public class Parser
 							throw new EtichettaDuplicataException((int)etichetta.ritornaValore());
 						etichette.add((int)etichetta.ritornaValore());
 					}
-					else throw new ParsingException();
+					else throw new TokenInaspettatoException();
 				}
 				lineaCodice.clear();
 				t = listaToken.get(i);
 				if(t.ritornaTipoToken().equals(Tok.INTERO))
 					label = (Intero)t;
-				else throw new ParsingException();
+				else throw new TokenInaspettatoException();
 				GotoIstruzione istrGoto = new GotoIstruzione(label,etichetta);
 				istruzioneLst.add(istrGoto);
 				i++;
@@ -299,13 +329,13 @@ public class Parser
 							throw new EtichettaDuplicataException((int)etichetta.ritornaValore());
 						etichette.add((int)etichetta.ritornaValore());
 					}
-					else throw new ParsingException();
+					else throw new TokenInaspettatoException();
 				}
 				lineaCodice.clear();
 				t = listaToken.get(i);
 				if(t.ritornaTipoToken().equals(Tok.VARIABILE))
 					varStringa = (String)t.ritornaValore();
-				else throw new ParsingException();
+				else throw new TokenInaspettatoException();
 				InputIstruzione istrInput = new InputIstruzione(varStringa,etichetta);
 				istruzioneLst.add(istrInput);
 				i++;
@@ -316,6 +346,10 @@ public class Parser
 		return istruzioneLst;
 	}
 	
+	/**
+	 * Trasforma la lista di istruzioni costruita durante il parsing in un ProgrammaEseguibile.
+	 * @return programma eseguibile.
+	 */
 	public ProgrammaEseguibile creaProgrammaEseguibile()
 	{
 		return new ProgrammaEseguibile(getListaIstruzioni());

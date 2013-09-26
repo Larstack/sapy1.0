@@ -1,24 +1,33 @@
 package it.uniroma1.sapy.lexer.token;
 
 /**
- * Classe astratta che definisce un Token di tipo generico
+ * Classe astratta che definisce i Token.
  */
 abstract public class Token
 {
+	/**
+	 * Tipo di Token.
+	 */
 	protected Tok tipoToken;
+	
+	/**
+	 * Valore associato al Token.
+	 */
 	protected Object valoreToken;
+	
 	/**
 	 * Costruttore
-	 * @param Tok - Tipo del token
+	 * @param t - tipo di Token.
 	 */
 	public Token(Tok t)
 	{
 		tipoToken = t;
 	}
+	
 	/**
 	 * Costruttore
-	 * @param Tok - Tipo del token
-	 * @param Object - Valore da assegnare al token
+	 * @param t - tipo di Token.
+	 * @param valoreToken - valore assegnato al token.
 	 */
 	public Token(Tok t, Object valoreToken)
 	{
@@ -27,7 +36,8 @@ abstract public class Token
 	}
 	
 	/**
-	 * @return Tok - Ritorna il tipo di token
+	 * Ritorna il tipo del Token.
+	 * @return tipo di token.
 	 */
 	public Tok ritornaTipoToken()
 	{
@@ -35,8 +45,8 @@ abstract public class Token
 	}
 	
 	/**
-	 * Ritorna il valore del token
-	 * @return Object - Valore del token
+	 * Ritorna il valore associato al token.
+	 * @return valore associato al token.
 	 */
 	public Object ritornaValore()
 	{

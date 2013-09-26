@@ -1,7 +1,7 @@
 package it.uniroma1.sapy.lexer.token;
 
 /**
- * Definisce il token MINORE "<"
+ * Token operatore < (MINORE).
  */
 public class Minore extends Token {
 	

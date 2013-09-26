@@ -1,7 +1,7 @@
 package it.uniroma1.sapy.lexer.token;
 
 /**
- * Definisce il token RIGHT_PAR ")"
+ * Token di tipo RIGHT_PAR.
  */
 public class RightPar extends Token
 {

@@ -5,19 +5,24 @@ import java.lang.reflect.Constructor;
 import java.util.*;
 import it.uniroma1.sapy.lexer.token.*;
 /**
- * Prendendo in input un sorgente Sapy, costruisce una lista di token
+ * Costruisce una lista di token a partire da un sorgente Sapy.
  * @author Leonardo Andres Ricciotti
  */
 public class Lexer 
 {
+	/**
+	 * lista di Token costruita dal Lexer.
+	 */
 	private ArrayList<Token> listaToken;
+	
+	/**
+	 * sorgente Sapy passato in input. 
+	 */
 	private String sorgente;
 	
 	/**
-	 * Costruttore<br />
-	 * Inizializza lo scanner e chiama il metodo esaminaSorgente
-	 * @param String - Percorso del file sorgente
-	 * @exception FileNotFoundException - Viene lanciata se il file sorgente non viene trovato  
+	 * Costruttore
+	 * @param sorgente - sorgente Sapy da analizzare.  
 	 */
 	public Lexer(String sorgente)
 	{
@@ -26,8 +31,7 @@ public class Lexer
 	}
 	
 	/**
-	 * Esegue l'analisi del sorgente linea per linea e costruisce la lista di Token
-	 * @param Scanner - Scanner passato dal costruttore dopo aver caricato il sorgente
+	 * Esegue l'analisi del sorgente linea per linea e costruisce la lista di Token.
 	 */
 	public void esaminaSorgente()
 	{
@@ -93,8 +97,8 @@ public class Lexer
 	}
 	
 	/**
-	 * Individua il tipo di Token, partendo dalla stringa data in input 
-	 * @param String - Stringa da analizzare
+	 * Individua il tipo di Token, partendo dalla stringa data in input. 
+	 * @param t - String da analizzare.
 	 */
 	public void individuaToken(String t)
 	{
@@ -155,8 +159,8 @@ public class Lexer
 	}
 	
 	/**
-	 * Esamina un blocco di una lina di codice, riconoscendone i token all'interno
-	 * @param String - Parte di linea di codice da esaminare
+	 * Esamina un blocco(senza spazi) di una linea di codice, riconoscendone i token all'interno.
+	 * @param blocco - parte di linea di codice senza spazi da esaminare.
 	 */
 	public void esaminaBlocco(String blocco)
 	{
@@ -298,8 +302,8 @@ public class Lexer
 	}
 	
 	/**
-	 * Restituisce la lista di Token del sorgente sapy
-	 * @return ArrayList<Token> - ArrayList dei Token del sorgente
+	 * Ritorna la lista di Token costruita dal Lexer.
+	 * @return lista di Token.
 	 */
 	public ArrayList<Token> getListaToken()
 	{
@@ -307,8 +311,8 @@ public class Lexer
 	}
 	
 	/**
-	 * Ritorna l'elenco dei token come stringa
-	 * String - Elenco dei token del sorgente 
+	 * Ritorna l'elenco dei Token sotto forma di String.
+	 * @return elenco dei Token. 
 	 */
 	@Override
 	public String toString()
@@ -321,11 +325,15 @@ public class Lexer
 		}
 		return s;
 	}
-	//////////////////////////////////////////////////////////////////////
-	public static void main(String[] args) throws Exception
+	
+	/**
+	 * Stampa a video la lista dei Token costruita dal Lexer.
+	 * @param args - percorso del file sorgente Sapy.
+	 * @throws FileNotFoundException - se il percorso del file dato in input non viene trovato.
+	 */
+	public static void main(String[] args) throws FileNotFoundException
 	{
-		//File f = new File(args[0]);
-		File f = new File("/home/leonardo/Development/Programmazione(Navigli)/prg/prg4.sapy");
+		File f = new File(args[0]);
 		Scanner s = new Scanner(f);
 		String sorg = "";		
 		while(s.hasNextLine()){sorg=sorg+s.nextLine()+"\n";}
@@ -333,7 +341,6 @@ public class Lexer
 		Lexer lex = new Lexer(sorg);
 		lex.esaminaSorgente();
 		System.out.print(lex.toString());
-		s.close();
 	}
 
 }

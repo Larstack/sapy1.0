@@ -1,12 +1,12 @@
 package it.uniroma1.sapy.exception;
 
 /**
- * Eccezione lanciata in caso di errore nelle espressioni booleane
+ * Eccezione lanciata in caso di errore nelle espressioni booleane.
  */
 public class BooleanParsingException extends Exception
 {
 	/**
-	 * Stampa il messaggio di errore
+	 * Stampa il messaggio di errore.
 	 */
 	@Override
 	public void printStackTrace()

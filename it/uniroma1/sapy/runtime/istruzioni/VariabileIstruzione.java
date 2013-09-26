@@ -5,15 +5,41 @@ import java.util.*;
 import it.uniroma1.sapy.exception.*;
 import it.uniroma1.sapy.lexer.token.*;
 import it.uniroma1.sapy.parsing.Parser;
-import it.uniroma1.sapy.runtime.VarRepository;
+import it.uniroma1.sapy.runtime.*;
+import it.uniroma1.sapy.runtime.espressioni.*;
 
+/**
+ * Variabile.<br />
+ * Identifica la variabile e il suo contenuto.
+ */
 public class VariabileIstruzione implements Istruzione
 {
+	/**
+	 * Nome della variabile.
+	 */
 	private String nomeVariabile;
+	
+	/**
+	 * Valore della variabile sotto forma di Token.
+	 */
 	private Token valoreVariabile;
+	
+	/**
+	 * Etichetta che identifica l'istruzione, utilizzata dall'istruzione GOTO.
+	 */
 	private Intero etichetta;
+	
+	/**
+	 * Valore della variabile(stringa, intero o espressione da risolvere).
+	 */
 	private ArrayList<Token> lineaCodice;
 	
+	/**
+	 * Costruttore
+	 * @param nomeVariabile - nome della variabile.
+	 * @param lineaCodice - valore della variabile(stringa, intero o espressione da risolvere).
+	 * @param etichetta - etichetta che identifica l'istruzione.
+	 */
 	public VariabileIstruzione(String nomeVariabile,ArrayList<Token> lineaCodice,Intero etichetta)
 	{
 		this.nomeVariabile = nomeVariabile;
@@ -21,8 +47,16 @@ public class VariabileIstruzione implements Istruzione
 		this.etichetta = etichetta;
 	}
 	
+	/**
+	 * Ritorna il valore della variabile.
+	 * @return valore della variabile.
+	 */
 	public Token getValoreVariabile(){ return valoreVariabile; }
 	
+	/**
+	 * Ritorna il nome della variabile.
+	 * @return nome della variabile.
+	 */
 	public String getNomeVariabile(){ return nomeVariabile; }
 	
 	@Override
@@ -33,7 +67,7 @@ public class VariabileIstruzione implements Istruzione
 	}
 
 	@Override
-	public Object esegui() throws Exception
+	public Object esegui() throws ExtraTokenException, OperazioneNonValidaException, ParentesiParsingException, OperandoMissingException, ParsingException, OperatoreMissingException
 	{
 		VarRepository variabili = VarRepository.getInstance();
 		ArrayList<Token> lineaCodiceProvvisoria = (ArrayList<Token>)lineaCodice.clone();
