@@ -30,7 +30,7 @@ public class Confronto extends Espressione
 	 */
 	@Override
 	public Token getRisultato() throws OperazioneNonValidaException, OperatoreMissingException, ExtraTokenException, ParentesiParsingException, OperandoMissingException
-	{	
+	{
 		return analizzaExpr();
 	}
 	
@@ -104,18 +104,13 @@ public class Confronto extends Espressione
 	 */
 	public Token risolviEspressione(ArrayList<Token> espressione) throws ExtraTokenException, ParentesiParsingException, OperazioneNonValidaException, OperandoMissingException
 	{
-		Token risultato;
-		if(Condizione.isExprBooleana(espressione))
-		{	
-			ExprBooleana espr = new ExprBooleana(espressione);
-			risultato = espr.getRisultato();
-		}
+		if(espressione.size()==1)
+				return espressione.get(0);
 		else if(Condizione.isExprMatematica(espressione))
 		{
 			ExprMatematica espr = new ExprMatematica(espressione);
-			risultato = espr.getRisultato();
+			return espr.getRisultato();
 		}
 		else throw new OperandoMissingException();
-		return risultato;
 	}
 }

@@ -22,9 +22,12 @@ public class ExprBooleana extends Espressione
 	 * @throws ExtraTokenException - se il numero di Token supera quello previsto. 
 	 * @throws OperazioneNonValidaException - se l'espressione da analizzare è costituito da Token non validi.
 	 * @throws ParentesiParsingException - se si verifica un errore di corrispondenza tra le parentesi.
+	 * @throws OperandoMissingException - se manca un operando.
+	 * @throws OperatoreMissingException - se si riscontra l'assenza di operatori.
+	 * @throws ExtraTokenException - se il numero di Token dell'espressione supera quello previsto.
 	 */
 	@Override
-	public Token getRisultato() throws ExtraTokenException, ParentesiParsingException, OperazioneNonValidaException
+	public Token getRisultato() throws ExtraTokenException, ParentesiParsingException, OperazioneNonValidaException, OperatoreMissingException, OperandoMissingException
 	{	
 		Token result = expr();
 		if(point<text.size()) throw new ExtraTokenException();
@@ -36,8 +39,11 @@ public class ExprBooleana extends Espressione
 	 * @return risultato della somma logica o dell'intera espressione booleana in analisi.
 	 * @throws OperazioneNonValidaException - se l'espressione da analizzare è costituito da Token non validi.
 	 * @throws ParentesiParsingException - se si verifica un errore di corrispondenza tra le parentesi.
+	 * @throws OperandoMissingException - se manca un operando.
+	 * @throws OperatoreMissingException - se si riscontra l'assenza di operatori.
+	 * @throws ExtraTokenException - se il numero di Token dell'espressione supera quello previsto.
 	 */
-	public Token expr() throws ParentesiParsingException, OperazioneNonValidaException
+	public Token expr() throws ParentesiParsingException, OperazioneNonValidaException, ExtraTokenException, OperatoreMissingException, OperandoMissingException
 	{
 		Token x = andExpr();
 		if(!(point>text.size()-1))
@@ -59,8 +65,11 @@ public class ExprBooleana extends Espressione
 	 * @return risultato del prodotto logico o del valore ritornato da notExpr().
 	 * @throws OperazioneNonValidaException - se l'espressione da analizzare è costituito da Token non validi.
 	 * @throws ParentesiParsingException - se si verifica un errore di corrispondenza tra le parentesi.
+	 * @throws OperandoMissingException - se manca un operando.
+	 * @throws OperatoreMissingException - se si riscontra l'assenza di operatori.
+	 * @throws ExtraTokenException - se il numero di Token dell'espressione supera quello previsto.
 	 */
-	public Token andExpr() throws ParentesiParsingException, OperazioneNonValidaException
+	public Token andExpr() throws ParentesiParsingException, OperazioneNonValidaException, ExtraTokenException, OperatoreMissingException, OperandoMissingException
 	{
 		Token x = notExpr();
 		if(!(point>text.size()-1))
@@ -83,8 +92,11 @@ public class ExprBooleana extends Espressione
 	 * @return valore negato del Token di tipo BOOLEANO o valore restituito da simpleExpr().
 	 * @throws OperazioneNonValidaException - se l'espressione da analizzare è costituito da Token non validi.
 	 * @throws ParentesiParsingException - se si verifica un errore di corrispondenza tra le parentesi.
+	 * @throws OperandoMissingException - se manca un operando.
+	 * @throws OperatoreMissingException - se si riscontra l'assenza di operatori.
+	 * @throws ExtraTokenException - se il numero di Token dell'espressione supera quello previsto.
 	 */
-	public Token notExpr() throws ParentesiParsingException, OperazioneNonValidaException
+	public Token notExpr() throws ParentesiParsingException, OperazioneNonValidaException, ExtraTokenException, OperatoreMissingException, OperandoMissingException
 	{
 		if(peek().ritornaTipoToken().equals(Tok.NOT))
 		{
@@ -101,8 +113,11 @@ public class ExprBooleana extends Espressione
 	 * @return Token nella posizione indicata dall'indice(point) o risultato dell'espressione tra parentesi.
 	 * @throws OperazioneNonValidaException - se l'espressione da analizzare è costituito da Token non validi.
 	 * @throws ParentesiParsingException - se si verifica un errore di corrispondenza tra le parentesi.
+	 * @throws OperandoMissingException - se manca un operando.
+	 * @throws OperatoreMissingException - se si riscontra l'assenza di operatori.
+	 * @throws ExtraTokenException - se il numero di Token dell'espressione supera quello previsto.
 	 */
-	public Token simpleExpr() throws ParentesiParsingException, OperazioneNonValidaException
+	public Token simpleExpr() throws ParentesiParsingException, OperazioneNonValidaException, ExtraTokenException, OperatoreMissingException, OperandoMissingException
 	{
 		Token t = peek();
 		if(t.ritornaTipoToken().equals(Tok.LEFT_PAR))
@@ -124,7 +139,20 @@ public class ExprBooleana extends Espressione
 		}
 		else if(isTerm(t))
 		{
-			consume();
+			ArrayList<Token> esp = new ArrayList<Token>();
+			while(isTerm(t)&&!t.ritornaTipoToken().equals(Tok.RIGHT_PAR))
+			{
+				esp.add(t);
+				consume();
+				if(point>text.size()-1) break;
+				t = peek();
+			}
+			if(esp.size()==1) t = esp.get(0);
+			else if(Condizione.isConfronto(esp))
+			{
+				Confronto espr = new Confronto(esp);
+				t = espr.getRisultato();
+			}
 			return t;
 		}
 		else
@@ -148,6 +176,6 @@ public class ExprBooleana extends Espressione
 	 */
 	public boolean isTerm(Token t)
 	{
-		return t.ritornaTipoToken().equals(Tok.BOOLEANO);
+		return !t.ritornaTipoToken().equals(Tok.AND)&&!t.ritornaTipoToken().equals(Tok.OR)&&!t.ritornaTipoToken().equals(Tok.NOT); 
 	}
 }

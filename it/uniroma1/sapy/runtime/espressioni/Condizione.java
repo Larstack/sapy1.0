@@ -98,7 +98,7 @@ public class Condizione extends Espressione
 	 */
 	public static boolean isConfronto(ArrayList<Token> espressioneDaAnalizzare)
 	{
-		Tok[] listaConfr = new Tok[] {Tok.STRINGA,Tok.DIVERSO,Tok.MAGGIORE,Tok.MAGGIOREUGUALE,Tok.MINORE,Tok.MINOREUGUALE,Tok.UGUALE,Tok.BOOLEANO,Tok.OR,Tok.AND,Tok.NOT,Tok.INTERO,Tok.PIU,Tok.MENO,Tok.PER,Tok.DIVISO,Tok.MODULO,Tok.LEFT_PAR,Tok.RIGHT_PAR};
+		Tok[] listaConfr = new Tok[] {Tok.STRINGA,Tok.DIVERSO,Tok.MAGGIORE,Tok.MAGGIOREUGUALE,Tok.MINORE,Tok.MINOREUGUALE,Tok.UGUALE,Tok.BOOLEANO,Tok.INTERO,Tok.PIU,Tok.MENO,Tok.PER,Tok.DIVISO,Tok.MODULO,Tok.LEFT_PAR,Tok.RIGHT_PAR};
 		ArrayList<Tok> exprConfr = new ArrayList<Tok>();
 		for(Tok t : listaConfr)
 			exprConfr.add(t);
@@ -118,7 +118,7 @@ public class Condizione extends Espressione
 	 */
 	public static boolean isExprBooleana(ArrayList<Token> espressioneDaAnalizzare)
 	{
-		Tok[] listaBoole = new Tok[] {Tok.BOOLEANO,Tok.OR,Tok.AND,Tok.NOT,Tok.LEFT_PAR,Tok.RIGHT_PAR};
+		Tok[] listaBoole = new Tok[] {Tok.OR,Tok.AND,Tok.NOT,Tok.STRINGA,Tok.DIVERSO,Tok.MAGGIORE,Tok.MAGGIOREUGUALE,Tok.MINORE,Tok.MINOREUGUALE,Tok.UGUALE,Tok.BOOLEANO,Tok.INTERO,Tok.PIU,Tok.MENO,Tok.PER,Tok.DIVISO,Tok.MODULO,Tok.LEFT_PAR,Tok.RIGHT_PAR};
 		ArrayList<Tok> exprBoole = new ArrayList<Tok>();
 		for(Tok t : listaBoole)
 			exprBoole.add(t);
