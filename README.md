@@ -1,10 +1,10 @@
 Sapy 1.0
 =======
 
-Interprete Java per il Sapienza BASIC v1.0
+Interprete Java per il Sapienza BASIC v.1.0
 
-Il progetto Sapy(Sapienza BASIC) v1.0 implementa la prima versione dell'interprete del dialetto BASIC 
-chiamato Sapienza BASIC v1.0.<br />
+Il progetto Sapy(Sapienza BASIC) v.1.0 implementa la prima versione dell'interprete del dialetto BASIC 
+chiamato Sapienza BASIC v.1.0.<br />
 Il progetto è stato sviluppato interamente in Java. Questo interpreta un file di testo .sapy e ne esegue le istruzioni.<br />
 
 L'interprete è suddiviso in diversi moduli, tra i quali quelli di riferimento sono:<br />
