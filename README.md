@@ -13,7 +13,7 @@ L'interprete è suddiviso in diversi moduli, tra i quali quelli di riferimento s
 • l'Interprete,
 • il modulo chiamato Sapy, punto di partenza di tutto l'interprete.
 
-Lexer (it.uniroma1.sapy.lexer)
+Lexer (it.uniroma1.sapy.lexer)\n
 L'analizzatore lessicale riconosce in una stringa di testo le parole(nel senso più ampio del termine) valide, 
 riconosciute come Token dall'interprete.
 I Token sono organizzati in un package (it.uniroma1.sapy.lexer.token), dove ogni classe, sottoclasse di Token, 
